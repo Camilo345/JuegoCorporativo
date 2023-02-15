@@ -1,0 +1,28 @@
+body {
+    background: #f5eddc;
+    background: url('../../imagenes/background.jpg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    overflow: hidden;
+}
+
+.card.text-center{
+  background-color: rgb(51, 51, 51);
+}
+
+.card-header{
+  color: white;
+}
+
+p{
+  color: white;
+}
+
+.form-group input{
+  background-color: transparent;
+  color: white;
+  border: none;
+  border-bottom: white thin solid;
+}
