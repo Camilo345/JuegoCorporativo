@@ -1,6 +1,37 @@
 import '../../css/registro/registro.css';
+import InputRegistro from "./inputRegistro.js";
+import { useState } from 'react';
+import { HacerRegistro } from '../../javascript/iniciarFirebase.js';
+import { useParams, useNavigate } from "react-router-dom";
 
-function bodyRegistro(){
+function BodyRegistro(){
+  const [nombre,setNombre] = useState('');
+  const [apellido,setApellido] = useState('');
+  const [nick,setNick] = useState('');
+  const [contraseña,setContraseña] = useState('');
+  const [telefono,setTelefono] = useState('');
+
+  const navigate = useNavigate();
+
+  const cambiarNombre = val =>{
+    setNombre(val);
+  };
+  const cambiarApellido = val =>{
+    setApellido(val);
+  };
+  const cambiarNick = val =>{
+    setNick(val);
+  };
+  const cambiarContraseña = val =>{
+    setContraseña(val);
+  };
+  const cambiarTelefono = val =>{
+    setTelefono(val);
+  };
+
+  const hacerRegistro = () =>{
+    HacerRegistro(nombre,apellido,nick,contraseña,telefono,navigate);
+  }
     return(
 
         <div className="container p-4">
@@ -11,45 +42,21 @@ function bodyRegistro(){
                 <h3>Registrate</h3>
               </div>
               <div className="card-body">
-                <form className="needs-validation" novalidate>
-                  <div className="form-group">
-                    <input type="text" name="nombrep" id="nombrep" placeholder="Nombre(s)" className="form-control" autofocus required/>
-                    <div className="invalid-feedback">
-                      Campo requerido.
-                    </div>
-                  </div>
-                  <div className="form-group">
-                    <input type="text" name="apellidop" id="apellidop" placeholder="Apellido(s)" className="form-control" required/>
-                    <div className="invalid-feedback">
-                      Campo requerido.
-                    </div>
-                  </div>
-                  <div className="form-group">
-                    <input type="text" name="nickname" id="nickname" placeholder="Nickname" className="form-control" required/>
-                    <div className="invalid-feedback">
-                      Campo requerido.
-                    </div>
-                  </div>
-                  <div className="form-group">
-                    <input type="password" name="contrasenia" id="contrasenia" placeholder="Contraseña" className="form-control" required/>
-                    <div className="invalid-feedback">
-                      Campo requerido.
-                    </div>
-                  </div>
-                  <div className="form-group">
-                    <input type="text" name="telefono" id="telefono" placeholder="Telefono" className="form-control" required/>
-                    <div className="invalid-feedback">
-                      Campo requerido.
-                    </div>
-                  </div>
+                <form className="needs-validation" noValidate>
+                  <InputRegistro manejarClic={cambiarNombre} tipo="text" id="nombrep" placeHolder="Nombre(s)"/>
+                  <InputRegistro manejarClic={cambiarApellido} tipo="text" id="nickname" placeHolder="Apellido(s)"/>
+                  <InputRegistro manejarClic={cambiarNick} tipo="text" id="nickname" placeHolder="Nickname"/>
+                  <InputRegistro manejarClic={cambiarContraseña} tipo="password" id="contrasenia" placeHolder="Contraseña"/>
+                  <InputRegistro manejarClic={cambiarTelefono} tipo="text" id="telefono" placeHolder="Telefono"/>
+                
                   <div className="form-group">
                     
                   </div>
                   </form>
-                  <button className="btn btn-primary btn-block" type="submit" id="send" onclick="guardar()">
+                  <button className="btn btn-primary btn-block" type="submit" id="send"  onClick={hacerRegistro}>
                     Registrarse
                   </button>
-                  <p>Ya tienes cuenta? <a href="./index.html">Entra</a></p>       
+                  <p>Ya tienes cuenta? <a href="/">Entra</a></p>       
               </div>
             </div>
           </div>
@@ -59,4 +66,4 @@ function bodyRegistro(){
     );
 }
 
-export default bodyRegistro;
+export default BodyRegistro;

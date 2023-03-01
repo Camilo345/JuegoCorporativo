@@ -26,3 +26,25 @@ p{
   border: none;
   border-bottom: white thin solid;
 }
+
+.contNav{
+  display: flex;
+  justify-content: space-between;
+}
+
+.contPuntos{
+  display: flex;
+  flex-direction: row;
+
+}
+
+.txtPuntos{
+  margin-right: 5%;
+}
+
+.contInfo{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  align-self: flex-end;
+}

@@ -1,25 +1,41 @@
 import React, { Fragment, useState, useCallback,useEffect } from "react";
 import { Unity, useUnityContext } from "react-unity-webgl";
-import unityScript from "../componentes/unity.js";
+import { LlamarActualizarPuntaje } from '../javascript/iniciarFirebase.js';
+import  Nav from './login/loginHeader.js';
+
 
 function App() {
 
-  const [isGameOver, setIsGameOver] = useState(false);
+  <Nav></Nav>
+
   const [puntaje, setPuntaje] = useState();
 
-  const { unityProvider, addEventListener, removeEventListener } = useUnityContext({
-    loaderUrl: "/juego/build/JuegoCorporativo.loader.js",
-    dataUrl: "/juego/build/JuegoCorporativo.data",
-    frameworkUrl: "/juego/build/JuegoCorporativo.framework.js",
-    codeUrl: "/juego/build/JuegoCorporativo.wasm",
+  
+
+  const { unityProvider, addEventListener, removeEventListener,UNSAFE__unityInstance } = useUnityContext({
+    loaderUrl: "./juego/build/JuegoCorporativo.loader.js",
+    dataUrl: "./juego/build/JuegoCorporativo.data",
+    frameworkUrl: "./juego/build/JuegoCorporativo.framework.js",
+    codeUrl: "./juego/build/JuegoCorporativo.wasm",
   });
 
 
   const manejarPuntaje = useCallback((puntaje) => {
-    setIsGameOver(true);
     setPuntaje(puntaje);
     console.log(puntaje);
+
+    var puntos = localStorage.getItem("puntos");
+    if(puntaje>puntos){
+      LlamarActualizarPuntaje(puntaje);
+    }
+    
   }, []);
+
+  const Quitar = useCallback(() => {
+    console.log("Quitar");
+  }, []);
+
+
 
   
   useEffect(() => {
@@ -29,9 +45,20 @@ function App() {
     };
   }, [addEventListener, removeEventListener, manejarPuntaje]);
 
+   useEffect(() => {
+    addEventListener("Quitar", Quitar);
+    return () => {
+      removeEventListener("Quitar", Quitar);
+    };
+  }, [addEventListener, removeEventListener, Quitar]);
+
 
   return (
-    <Unity unityProvider={unityProvider} style={{ width: 960, height: 600 }} />
+    <div>
+          <Unity unityProvider={unityProvider} style={{ width: 960, height: 600 }} />
+          <button>Hola</button>
+    </div>
+
   );
 }
 

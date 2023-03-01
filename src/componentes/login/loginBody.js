@@ -1,7 +1,27 @@
 
 import '../../css/login/login.css';
+import Input from '../login/input.js';
+import { useState } from 'react';
+import { Link } from "react-router-dom";
+import { LlamarLogin } from '../../javascript/iniciarFirebase.js';
+import { useParams, useNavigate } from "react-router-dom";
 
-function loginBody() {
+function LoginBody({manejarClic}) {
+    const [nick,setNick] = useState('');
+    const [contraseña,setContraseña] = useState('');
+    const navigate = useNavigate();
+
+    const cambiarNick = val =>{
+      setNick(val);
+    };
+
+    const cambiarContraseña = val =>{
+      setContraseña(val);
+    };
+
+    const hacerLogin = () =>{
+      LlamarLogin(nick,contraseña,navigate);
+      }
 	return(
         <div className="container p-4">
         <div className="row">
@@ -11,18 +31,14 @@ function loginBody() {
                 <h3>Inicia sesión</h3>
               </div>
               <div className="card-body">
+                 <Input manejarClic={cambiarNick} tipo="Nickname" esContraseña="text"/>
+                 <Input manejarClic={cambiarContraseña} tipo="contrasenia" esContraseña="password"/>
                   <div className="form-group">
-                    <input type="text" name="nickname" id="nickname" placeholder="Nickname" className="form-control"/>
-                  </div>
-                  <div className="form-group">
-                    <input type="password" name="contrasenia" id="contrasenia" placeholder="Contraseña" className="form-control"/>
-                  </div>
-                  <div className="form-group">
-                  <button className="btn btn-primary btn-block" >
+                  <button className="btn btn-primary btn-block" onClick={hacerLogin}>
                    Entrar
                   </button>
                   </div>
-                  <p>No tienes cuenta? <a href="/kaleido/registroPlayer.html">Crea una</a></p>
+                  <p>No tienes cuenta? <a href="/register">Crea una</a></p>
               </div>
             </div>
           </div>
@@ -31,4 +47,4 @@ function loginBody() {
 	);
 }
 
-export default loginBody;
+export default LoginBody;
